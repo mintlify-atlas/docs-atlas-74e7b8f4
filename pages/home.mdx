@@ -1,0 +1,155 @@
+---
+title: "Home page"
+description: "The main portfolio page — animated hero, work experience, and software projects."
+---
+
+The home page (`index.html`) is Patrick Foster's portfolio landing page. It is divided into four main sections: an animated hero, a work experience grid, a projects grid, and a goodbye footer.
+
+<CardGroup cols={2}>
+  <Card title="Hero" icon="user">
+    Animated heading with a circular profile photo on a dark charcoal background.
+  </Card>
+  <Card title="Work experience" icon="briefcase">
+    Two-column card grid showing Netflix and GoDaddy roles.
+  </Card>
+  <Card title="Projects" icon="code">
+    Two-column card grid for Courser and Wordsmith with live links.
+  </Card>
+  <Card title="Footer" icon="hand">
+    Purple goodbye section with an animated waving hand image.
+  </Card>
+</CardGroup>
+
+## Hero section
+
+The hero (`class="top"`) uses a dark charcoal background (`#212529`) and a side-by-side layout: the animated heading on the left, a circular profile photo on the right.
+
+### Animated heading
+
+Each word in "Hello, I'm Patrick" has its own color defined in CSS custom properties, and a `::before` pseudo-element produces the color-fill reveal animation on hover.
+
+```html index.html
+<h1
+  class="heading"
+  data-text="Hello,"
+  style="--clr: #ffdd1c"
+>
+  Hello,
+</h1>
+<h1
+  class="heading"
+  data-text="I'm"
+  style="--clr: #40BB94"
+>
+  I'm
+</h1>
+<h1
+  class="heading"
+  data-text="Patrick"
+  style="--clr: #4567DB"
+>
+  Patrick
+</h1>
+```
+
+The `data-text` attribute is read by the `::before` pseudo-element so it can overlay a colored copy of each word and clip-reveal it from left to right on hover.
+
+```css index.css
+.heading::before {
+  content: attr(data-text);
+  color: var(--clr);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 0;
+  overflow: hidden;
+  transition: 1s;
+  border-right: 8px solid var(--clr);
+  white-space: nowrap;
+}
+
+.heading:hover::before {
+  width: 100%;
+}
+```
+
+<Tip>
+  The `border-right` on the `::before` element acts as a visible cursor that moves across the text as the `width` animates from `0` to `100%`, reinforcing the left-to-right reveal effect.
+</Tip>
+
+### Color palette for the heading words
+
+| Word | Color | Hex |
+|------|-------|-----|
+| Hello, | Yellow | `#ffdd1c` |
+| I'm | Teal | `#40BB94` |
+| Patrick | Blue | `#4567DB` |
+
+### Wave divider
+
+An SVG wave shape separates the hero from the work experience section. It transitions between `#212529` (hero background) and `#FFFFFF` (work section background) using two `<path>` fills, creating a seamless visual handoff.
+
+## Work experience section
+
+The work experience section (`class="busSect"`) uses a two-column grid (`grid-template-columns: 1fr 1fr`). Each card has rounded corners (`border-radius: 30px`), a fixed height of `550px`, and a soft drop shadow.
+
+```css index.css
+.card {
+  box-shadow: 0px 20px 50px 0px rgba(0, 0, 0, 0.2);
+  border-radius: 30px;
+  height: 550px;
+}
+```
+
+<CardGroup cols={2}>
+  <Card title="Netflix" icon="play">
+    **Role:** Incoming Software Engineer
+
+    Displays the Netflix logo and role title. Represents Patrick's upcoming full-time position.
+  </Card>
+  <Card title="GoDaddy" icon="globe">
+    **Role:** Software Engineering Intern
+
+    Ran A/B tests that contributed to **\$1.8M ARR impact**. Highlights measurable business outcomes from the internship.
+  </Card>
+</CardGroup>
+
+## Projects section
+
+The projects section (`class="codeSect"`) uses a dark background with a two-column grid. Each project card uses a white outline (`outline: 2px solid #fff`) and a slight border radius (`border-radius: 5px`).
+
+### Courser
+
+ChatGPT for university classrooms. Built at HackUIowa 2023.
+
+**Awards:**
+- HackUIowa 2023 winner
+- JPECC 1st place
+- ERA Startup Accelerator Finalist
+
+**Links:**
+- GitHub: [github.com/GautamSharda/courser](https://github.com/GautamSharda/courser)
+- Website: [chatcourser.com](https://chatcourser.com/)
+
+### Wordsmith
+
+AI-powered Chrome extension that uses GPT to rewrite any highlighted text on a webpage.
+
+**Links:**
+- Website: [try-wordsmith.netlify.app](https://try-wordsmith.netlify.app/)
+- GitHub: [github.com/paaatrrrick/wordsmith-client](https://github.com/paaatrrrick/wordsmith-client)
+- Chrome Extension: [Chrome Web Store](https://chrome.google.com/webstore/detail/wordsmith/ffjginbaonjceegjiapjgopplicfpbcm)
+
+<Note>
+  Both project cards link to live external URLs. Verify that the Chrome Web Store listing and the Courser website remain active, as third-party links can expire.
+</Note>
+
+## Footer / goodbye section
+
+The footer (`class="bott"`) uses the primary accent color (`#4c3aff`) as a solid purple background. It contains:
+
+- A large **"Bye!"** heading
+- An animated waving hand image (CSS `@keyframes` rotation applied to a hand emoji or image asset)
+- A goodbye photo of Patrick
+
+The indigo/purple `#4c3aff` is the same color used for the fixed navigation button and the SVG shape dividers throughout the page, tying the visual identity together.

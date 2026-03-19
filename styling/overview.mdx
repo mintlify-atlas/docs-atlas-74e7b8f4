@@ -1,0 +1,217 @@
+---
+title: "Styling overview"
+description: "Color palette, typography, layout system, and CSS design patterns used across the portfolio."
+---
+
+# Styling overview
+
+The portfolio uses a single handcrafted CSS file (`css/index.css`, 1007 lines) with no external CSS framework. A smaller supplementary file (`css/about.css`) handles the schedule page.
+
+## Color palette
+
+Every color in the design is drawn from a consistent set of named hex values:
+
+| Color | Hex | Usage |
+|---|---|---|
+| Dark charcoal | `#212529` | Hero section background, projects section background |
+| Primary indigo | `#4C3AFF` | Nav button, footer background, SVG shape divider fills |
+| Hover indigo | `#362e95` | Button hover state |
+| Yellow | `#ffdd1c` | "Hello," heading word |
+| Teal | `#40BB94` | "I'm" heading word |
+| Blue | `#4567DB` | "Patrick" heading word |
+| White | `#fff` | Text on dark backgrounds, project card outlines |
+
+## Typography
+
+Google Fonts are loaded via a single `@import` at the top of `index.css`:
+
+```css index.css
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@700&family=Roboto:wght@300&display=swap');
+
+* {
+    font-family: Arial, Helvetica, sans-serif; /* fallback */
+}
+
+ul.headingText li a {
+    font-family: 'Poppins', sans-serif; /* hero heading */
+}
+```
+
+Three weights are imported: Poppins Bold (700) for the hero heading, Montserrat Bold (700) for section titles, and Roboto Light (300) for body text. Arial is the system fallback for all other elements.
+
+## Animated heading effect
+
+The hero heading uses a CSS `::before` pseudo-element with a `data-text` attribute to create a left-to-right color fill on hover. Each word gets its color from a CSS custom property `--clr` set via an inline style on the `<li>` element.
+
+```html index.html
+<ul class="headingText">
+    <li style="--clr: #ffdd1c;"><a href="#" data-text="&nbsp;Hello,">&nbsp;Hello,</a></li>
+    <li style="--clr: #40BB94;"><a href="#" data-text="&nbsp;I'm">&nbsp;I'm</a></li>
+    <li style="--clr: #4567DB;"><a href="#" data-text="&nbsp;Patrick">&nbsp;Patrick</a></li>
+</ul>
+```
+
+```css index.css
+ul.headingText li a {
+    font-size: 8rem;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5); /* ghost outline at rest */
+}
+
+ul.headingText li a::before {
+    content: attr(data-text);   /* mirrors the link text */
+    position: absolute;
+    color: var(--clr);          /* uses the CSS var from the <li> */
+    width: 0;                   /* starts hidden */
+    overflow: hidden;
+    transition: 1s;             /* smooth 1-second reveal */
+    border-right: 8px solid var(--clr); /* cursor-like trailing edge */
+    -webkit-text-stroke: 1px var(--clr);
+}
+
+ul.headingText li a:hover::before {
+    width: 100%; /* expands to full width on hover */
+}
+```
+
+<Tip>
+The `content: attr(data-text)` technique copies the visible text into the pseudo-element, allowing the color fill to overlay it precisely without duplicating DOM nodes.
+</Tip>
+
+## Decorative HR lines
+
+Section headings are followed by styled `<hr>` elements that use CSS gradients to add a colorful underline:
+
+```css index.css
+#hr1 {
+    /* Work Experience section — teal to blue */
+    background: linear-gradient(
+        90deg,
+        rgba(67, 206, 162, 1) 0%,
+        rgba(24, 90, 157, 1) 85%
+    );
+    height: .5rem;
+    border-radius: 5px;
+    border: none;
+}
+
+#hr2 {
+    /* Schedule page — blue to purple */
+    background: linear-gradient(
+        90deg,
+        rgba(69, 104, 220, 1) 0%,
+        rgba(176, 106, 179, 1) 100%
+    );
+}
+```
+
+## SVG wave shape dividers
+
+Smooth transitions between the white and dark sections are created using inline SVG elements wrapped in positioned `<div>` containers. The SVG path fills match the target section's background color, creating the appearance of a wavy border.
+
+```css index.css
+.custom-shape-divider-top-1702400715 {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+.custom-shape-divider-top-1702400715 svg {
+    position: relative;
+    display: block;
+    width: calc(100% + 1.3px);
+    height: 199px;
+    transform: rotateY(180deg); /* flip horizontally */
+}
+
+.custom-shape-divider-top-1702400715 .shape-fill {
+    fill: #212529; /* matches the dark section below */
+}
+```
+
+<Note>
+The SVG width is set to `calc(100% + 1.3px)` to prevent a 1px gap that can appear at certain browser zoom levels.
+</Note>
+
+## Layout system
+
+Both card sections use CSS Grid with two equal columns:
+
+```css index.css
+/* Work experience cards */
+.internshipsChunk {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    padding: 0px 60px;
+    margin-bottom: 150px;
+}
+
+/* Project cards */
+#codingChunks {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    padding: 0px 60px;
+}
+```
+
+## Two card styles
+
+The work experience and project sections use visually distinct card designs:
+
+<CardGroup cols={2}>
+  <Card title="Work experience cards" icon="briefcase">
+    White background, heavily rounded corners (`border-radius: 30px`), and a soft shadow. Fixed height of 550px on desktop.
+
+    ```css
+    .internshipCard {
+        border-radius: 30px;
+        height: 550px;
+        box-shadow: 0px 20px 50px 0px
+            rgba(0, 0, 0, 0.2);
+    }
+    ```
+  </Card>
+  <Card title="Project cards" icon="code">
+    Dark background (inherited from `.codeSect`), white outline border, and a deeper shadow to lift cards off the dark surface.
+
+    ```css
+    .codingChunk-content {
+        outline: 2px solid #fff;
+        border-radius: 5px;
+        box-shadow: 20px 20px 50px
+            rgba(0, 0, 0, 0.75);
+    }
+    ```
+  </Card>
+</CardGroup>
+
+## Waving hand animation
+
+The goodbye footer uses a CSS `@keyframes` animation on the hand image to create a looping wave gesture:
+
+```css index.css
+.wave {
+    width: 75px;
+    height: 75px;
+    animation-name: wave-animation;
+    animation-duration: 2.5s;
+    animation-iteration-count: infinite;
+    transform-origin: 70% 70%; /* pivot from the wrist */
+    display: inline-block;
+}
+
+@keyframes wave-animation {
+    0%   { transform: rotate(0.0deg) }
+    10%  { transform: rotate(14.0deg) }
+    20%  { transform: rotate(-8.0deg) }
+    30%  { transform: rotate(14.0deg) }
+    40%  { transform: rotate(-4.0deg) }
+    50%  { transform: rotate(10.0deg) }
+    60%  { transform: rotate(0.0deg) }
+    100% { transform: rotate(0.0deg) }
+}
+```
+
+The `transform-origin: 70% 70%` positions the pivot point near the bottom of the hand image, simulating a realistic wrist rotation. The second half of the keyframe (60%–100%) holds at 0° to create a natural pause between waves.

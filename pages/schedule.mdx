@@ -1,0 +1,56 @@
+---
+title: "Schedule page"
+description: "Spring 2024 class schedule displayed as a weekly timetable."
+---
+
+The schedule page (`about.html`) displays Patrick's Spring 2024 university class schedule as a simple timetable. It is a standalone page separate from the main portfolio.
+
+<Note>
+  The original HTML file contains a typo in the `<title>` tag: **"Sping 2024 Class Schedule"** instead of "Spring 2024 Class Schedule". This typo is present in the source and appears in the browser tab.
+</Note>
+
+## Class schedule
+
+| Course | Days | Time |
+|--------|------|------|
+| Digital Product Management | Tue / Thu | 2:00 – 3:15 pm |
+| Algorithms | Tue / Thu | 3:30 – 4:45 pm |
+| Capstone | Thu | 5:00 – 7:00 pm |
+| Finance | All days | Async |
+
+## Navigation
+
+A fixed button in the top-left corner links back to the main portfolio page:
+
+```html about.html
+<a href="index.html">
+  <button class="navButton">Home</button>
+</a>
+```
+
+The button uses the same `#4c3aff` indigo accent color defined in `index.css`, keeping the visual style consistent with the home page.
+
+## Stylesheets
+
+The schedule page loads two CSS files: the shared portfolio styles from `index.css` and a page-specific override file `about.css`.
+
+```html about.html
+<link rel="stylesheet" href="index.css" />
+<link rel="stylesheet" href="about.css" />
+```
+
+Loading `index.css` first ensures that global variables (custom properties, font imports, the nav button style) are available. `about.css` then applies any schedule-specific overrides on top.
+
+## Dark theme
+
+The schedule page inherits the same dark theme used in the hero section of the home page:
+
+| Property | Value |
+|----------|-------|
+| Background | `#212529` (dark charcoal) |
+| Text | `#ffffff` (white) |
+| Accent / nav button | `#4c3aff` (indigo) |
+
+<Tip>
+  The shared color variables in `index.css` mean that updating `#212529` or `#4c3aff` in one place will apply consistently across both `index.html` and `about.html`.
+</Tip>

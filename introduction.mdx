@@ -1,0 +1,47 @@
+---
+title: "Introduction"
+description: "Patrick Foster's personal portfolio website — built with HTML and CSS for HW6."
+---
+
+# Patrick Foster's Portfolio
+
+A personal portfolio website built as part of a web development assignment (HW6). The site showcases Patrick's professional background, software engineering work, and university class schedule using pure HTML and CSS — no frameworks required.
+
+<CardGroup cols={2}>
+  <Card title="Home page" icon="house" href="/pages/home">
+    Animated hero, work experience, and software projects
+  </Card>
+  <Card title="Schedule page" icon="calendar" href="/pages/schedule">
+    Spring 2024 weekly class schedule
+  </Card>
+  <Card title="Site structure" icon="sitemap" href="/structure">
+    File layout and how the two pages connect
+  </Card>
+  <Card title="Styling guide" icon="palette" href="/styling/overview">
+    CSS design system, colors, and typography
+  </Card>
+</CardGroup>
+
+## What the site includes
+
+The portfolio has two HTML pages linked together with a fixed navigation button:
+
+- **`index.html`** — The main portfolio page with an animated greeting, work experience cards, and software project showcases
+- **`about.html`** — A Spring 2024 class schedule displayed as a table
+
+## Tech stack
+
+| Layer | Technology |
+|---|---|
+| Markup | HTML5 |
+| Styling | CSS3 (custom, no framework) |
+| Fonts | Google Fonts (Poppins, Montserrat, Roboto) |
+| Hosting | Static file serving |
+
+## Key highlights
+
+- Hover-reveal text animation on the hero heading using CSS `::before` pseudo-elements and `transition`
+- SVG wave shape dividers between sections for smooth visual flow
+- Two-column grid layout for experience and project cards
+- Fully responsive — collapses to a single-column layout below 900px
+- Animated waving hand in the footer using `@keyframes`

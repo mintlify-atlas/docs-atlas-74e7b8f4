@@ -1,0 +1,181 @@
+---
+title: "Responsive design"
+description: "How the portfolio adapts to mobile screens using a single CSS media query breakpoint at 900px."
+---
+
+# Responsive design
+
+The portfolio uses a single media query breakpoint at `max-width: 900px` to adapt the layout for mobile and tablet screens. No CSS framework or grid system is used — all responsive behavior is hand-authored in `css/index.css`.
+
+## The breakpoint
+
+```css index.css
+@media only screen and (max-width: 900px) {
+    /* All mobile overrides live here */
+}
+```
+
+Screens 900px wide or narrower trigger the mobile layout. This covers most phones and many tablets in portrait orientation.
+
+## Desktop vs mobile comparison
+
+| Element | Desktop | Mobile (≤ 900px) |
+|---|---|---|
+| Hero (`.top`) | `flex-direction: row`, side by side | `flex-direction: column`, stacked |
+| Heading font size | `8rem` fixed | `20vw` viewport-relative |
+| Hover text animation | Enabled (`::before` visible) | Disabled (`display: none`) |
+| Profile photo size | `300px × 300px`, `border-radius: 45%` | `80vw × 125vw`, `border-radius: 10% 30% 10% 30%` |
+| Work experience grid | `grid-template-columns: 1fr 1fr` | `flex-direction: column` |
+| Work experience card height | Fixed `550px` | `auto`, no box-shadow |
+| Projects grid | `grid-template-columns: 1fr 1fr` | `flex-direction: column` |
+| Project card heights | Fixed (set by content + padding) | `auto` |
+| Goodbye section | `flex-direction: row` | `flex-direction: column` |
+| `.copy-text` | Visible | `display: none` |
+| `h5` elements | Visible | `display: none` |
+| Paragraph font size | `25px` | `18px` |
+
+## Layout changes
+
+### Hero section
+
+On desktop, the hero displays the heading text and profile photo side by side. On mobile they stack vertically:
+
+```css index.css
+@media only screen and (max-width: 900px) {
+    .top {
+        flex-direction: column;
+        padding: 3rem 0rem 0rem 0rem;
+        overflow: hidden;
+    }
+
+    .h1s {
+        margin: 2rem 0 2rem 1rem;
+    }
+}
+```
+
+### Card grids
+
+Both the work experience grid and the projects grid switch from CSS Grid to a vertical Flexbox column:
+
+```css index.css
+@media only screen and (max-width: 900px) {
+    .internshipsChunk {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: -100px;
+        margin-bottom: 0px;
+    }
+
+    .internshipCard {
+        margin-bottom: 40px;
+        width: 90%;
+        height: auto;      /* removes the fixed 550px */
+        box-shadow: none;  /* simplifies shadow on mobile */
+    }
+
+    #codingChunks {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 1rem 2rem 1rem 2rem;
+        gap: 20px;
+    }
+
+    .codingChunk {
+        height: auto;
+    }
+}
+```
+
+## Typography changes
+
+### Heading font size
+
+The hero heading uses a fixed `8rem` on desktop. On mobile this switches to `20vw` (20% of the viewport width) so the text scales proportionally with the screen:
+
+```css index.css
+@media only screen and (max-width: 900px) {
+    ul.headingText li a {
+        font-size: 20vw;
+        line-height: 4rem;
+        color: #FFF; /* solid white — no longer transparent */
+    }
+}
+```
+
+<Note>
+On desktop the heading text uses `color: transparent` with a `-webkit-text-stroke` outline. On mobile this is overridden to solid `#FFF` because the hover animation is disabled.
+</Note>
+
+## Disabling the hover animation on mobile
+
+The animated color-fill `::before` pseudo-element is hidden on mobile since hover interactions don't apply on touch devices:
+
+```css index.css
+@media only screen and (max-width: 900px) {
+    ul.headingText li a::before {
+        display: none;
+    }
+}
+```
+
+## Profile photo
+
+The profile photo changes from a fixed square to a viewport-relative rectangle with an asymmetric border radius:
+
+```css index.css
+@media only screen and (max-width: 900px) {
+    #fullBody {
+        margin: 1rem 1rem 8rem 1rem;
+        width: 80vw;
+        height: 125vw;                           /* taller than wide */
+        border-radius: 10% 30% 10% 30%;          /* organic shape */
+    }
+}
+```
+
+## Hidden elements
+
+Two elements are hidden entirely on mobile:
+
+```css index.css
+@media only screen and (max-width: 900px) {
+    .copy-text {
+        display: none; /* copy-email widget */
+    }
+
+    h5 {
+        display: none;
+    }
+}
+```
+
+## The schedule page (about.css)
+
+The `about.html` schedule page uses a separate stylesheet (`css/about.css`) that takes a simpler approach — it fills the full viewport and relies on the browser's native table layout to wrap on small screens:
+
+```css about.css
+.about-main {
+    width: 100vw;
+    height: 100vh;
+    background-color: #212529;
+    padding: 20px;
+}
+
+table {
+    width: 100%;
+    margin-top: 30px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 8px;
+    text-align: left;
+}
+```
+
+<Tip>
+The schedule table uses `width: 100%` to fill the container, which causes cells to compress naturally on narrow screens. For very small phones, horizontal scrolling may occur since no explicit mobile breakpoint is defined in `about.css`.
+</Tip>

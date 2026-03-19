@@ -1,0 +1,98 @@
+---
+title: "Site structure"
+description: "File layout, page navigation, and how the portfolio is organized."
+---
+
+The portfolio is a static two-page site with no build step or framework. All assets are self-contained in a single directory submitted as homework assignment HW6.
+
+## Directory layout
+
+<Tree>
+  <Tree.Folder name="patfoster_HW6" defaultOpen>
+    <Tree.File name="index.html" />
+    <Tree.File name="about.html" />
+    <Tree.Folder name="css" defaultOpen>
+      <Tree.File name="index.css" />
+      <Tree.File name="about.css" />
+    </Tree.Folder>
+    <Tree.Folder name="images" defaultOpen>
+      <Tree.File name="full.jpg" />
+      <Tree.File name="face.JPG" />
+      <Tree.File name="hand.png" />
+    </Tree.Folder>
+    <Tree.File name="README.md" />
+  </Tree.Folder>
+</Tree>
+
+<Note>
+  `README.md` is present in the repository but contains no content.
+</Note>
+
+## Pages
+
+<CardGroup cols={2}>
+  <Card title="index.html" icon="house">
+    The main portfolio page. Contains a hero section with an animated heading, a Work Experiences section with internship cards (Netflix, GoDaddy), a Projects section (Courser, Wordsmith), and a goodbye footer with a waving hand animation.
+  </Card>
+  <Card title="about.html" icon="calendar">
+    The Spring 2024 class schedule page. Displays a weekly table of four courses — Digital Product Management, Algorithms, Capstone, and Finance — with their meeting times across Monday through Friday.
+  </Card>
+</CardGroup>
+
+## Page navigation
+
+The two pages link to each other through a single fixed navigation element: an anchor tag with the class `schedule`.
+
+```html index.html
+<!-- On the main page, navigates to the schedule -->
+<a class="schedule" href="about.html">My Schedule</a>
+```
+
+```html about.html
+<!-- On the schedule page, navigates back home -->
+<a class="schedule" href="index.html">Home</a>
+```
+
+The `.schedule` class is defined in `index.css` and styles this button consistently on both pages. Because `about.html` imports both `about.css` and `index.css`, the nav button inherits the same appearance everywhere.
+
+<Tip>
+  Both pages share `index.css`. If you restyle the `.schedule` nav button, the change applies to both the home page and the schedule page simultaneously.
+</Tip>
+
+## CSS architecture
+
+<CardGroup cols={2}>
+  <Card title="css/index.css" icon="palette">
+    The primary stylesheet at 1,007 lines. Covers the full `index.html` layout including the animated `headingText` list, hero image positioning, the `.busSect` work experience section, internship and project cards, the wave SVG divider, and the goodbye footer. Also defines the shared `.schedule` nav button used on both pages.
+  </Card>
+  <Card title="css/about.css" icon="table">
+    A focused 32-line stylesheet for the schedule page only. Styles the `.about-main` container, the `<table>` element, and the `<th>`/`<td>` cells that display the weekly class grid.
+  </Card>
+</CardGroup>
+
+`about.html` imports both stylesheets in order:
+
+```html about.html
+<link rel="stylesheet" href="css/about.css">
+<link rel="stylesheet" href="css/index.css">
+```
+
+This means `index.css` rules can override `about.css` rules when selectors conflict. In practice the two files target distinct elements, so there is no conflict.
+
+## Image assets
+
+<CardGroup cols={3}>
+  <Card title="images/full.jpg" icon="image">
+    Patrick's full-body profile photo. Used in the hero `<header>` on `index.html` with the id `fullBody`.
+  </Card>
+  <Card title="images/face.JPG" icon="image">
+    A portrait photo used in the goodbye section footer of `index.html`, identified by `id="byeImg"`.
+  </Card>
+  <Card title="images/hand.png" icon="image">
+    The waving hand image rendered next to the "Bye!" heading in the footer. Animated via the `wave` CSS class defined in `index.css`.
+  </Card>
+</CardGroup>
+
+<Note>
+  Internship and project card images are loaded from external Cloudinary URLs, not from the local `images/` directory. Only the three hero and footer images are bundled with the project.
+</Note>
