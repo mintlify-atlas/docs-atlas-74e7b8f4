@@ -1,0 +1,41 @@
+{
+  "projectType": "frontend",
+  "projectName": "Patrick Foster's Portfolio",
+  "projectDescription": "A personal portfolio website for Patrick Foster showcasing his work experience, software projects, and class schedule, built with HTML and CSS.",
+  "theme": "willow",
+  "primaryColor": "#4C3AFF",
+  "lightColor": "#7B6FFF",
+  "darkColor": "#212529",
+  "navigation": {
+    "groups": [
+      {
+        "group": "Overview",
+        "pages": ["introduction", "structure"]
+      },
+      {
+        "group": "Pages",
+        "pages": ["pages/home", "pages/schedule"]
+      },
+      {
+        "group": "Styling",
+        "pages": ["styling/overview", "styling/responsive"]
+      }
+    ]
+  },
+  "keyFeatures": [
+    "Animated hero section with hover-reveal text effects using CSS transitions",
+    "Work experience showcase (Netflix, GoDaddy internships)",
+    "Software projects section (Courser, Wordsmith AI Chrome Extension)",
+    "Class schedule page with weekly timetable",
+    "Responsive design with mobile media queries",
+    "SVG wave shape dividers for visual section transitions",
+    "Fixed navigation button linking between pages",
+    "Animated waving hand GIF in the goodbye footer section"
+  ],
+  "publicApiSurface": [
+    "index.html — Main portfolio homepage",
+    "about.html — Spring 2024 class schedule page",
+    "css/index.css — Primary stylesheet for the portfolio",
+    "css/about.css — Stylesheet for the schedule page"
+  ]
+}
