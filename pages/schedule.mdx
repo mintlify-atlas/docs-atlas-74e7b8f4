@@ -20,26 +20,26 @@ The schedule page (`about.html`) displays Patrick's Spring 2024 university class
 
 ## Navigation
 
-A fixed button in the top-left corner links back to the main portfolio page:
+A fixed anchor in the top-right corner links back to the main portfolio page. It uses the same `.schedule` class as the home page's nav link, so both pages share a consistent button appearance:
 
 ```html about.html
-<a href="index.html">
-  <button class="navButton">Home</button>
+<a class="schedule" href="index.html">
+    Home
 </a>
 ```
 
-The button uses the same `#4c3aff` indigo accent color defined in `index.css`, keeping the visual style consistent with the home page.
+The `.schedule` class is defined in `index.css` and positions the element fixed at `top: 15px; right: 30px` with an indigo (`#4C3AFF`) background.
 
 ## Stylesheets
 
-The schedule page loads two CSS files: the shared portfolio styles from `index.css` and a page-specific override file `about.css`.
+The schedule page loads two CSS files. `about.css` is listed first, followed by `index.css`:
 
 ```html about.html
-<link rel="stylesheet" href="index.css" />
-<link rel="stylesheet" href="about.css" />
+<link rel="stylesheet" href="css/about.css">
+<link rel="stylesheet" href="css/index.css">
 ```
 
-Loading `index.css` first ensures that global variables (custom properties, font imports, the nav button style) are available. `about.css` then applies any schedule-specific overrides on top.
+Because `index.css` is loaded second, its rules take precedence when selectors conflict. In practice the two files target distinct elements — `about.css` styles the schedule container and table, while `index.css` styles the shared `.schedule` nav button — so there is no meaningful conflict.
 
 ## Dark theme
 

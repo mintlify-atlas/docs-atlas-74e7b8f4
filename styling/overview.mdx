@@ -37,7 +37,11 @@ ul.headingText li a {
 }
 ```
 
-Three weights are imported: Poppins Bold (700) for the hero heading, Montserrat Bold (700) for section titles, and Roboto Light (300) for body text. Arial is the system fallback for all other elements.
+Poppins Bold (700) is actively applied to the hero heading (`ul.headingText li a`). Montserrat Bold (700) and Roboto Light (300) are included in the import but their `font-family` declarations are commented out throughout the stylesheet — Arial is the effective fallback for all other elements.
+
+<Note>
+The Montserrat and Roboto `font-family` lines are preserved as comments in `index.css` (e.g. `/* font-family: 'Montserrat', sans-serif; */`), indicating they were used or considered during development but are not currently active.
+</Note>
 
 ## Animated heading effect
 

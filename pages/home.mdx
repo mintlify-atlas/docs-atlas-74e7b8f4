@@ -26,50 +26,39 @@ The hero (`class="top"`) uses a dark charcoal background (`#212529`) and a side-
 
 ### Animated heading
 
-Each word in "Hello, I'm Patrick" has its own color defined in CSS custom properties, and a `::before` pseudo-element produces the color-fill reveal animation on hover.
+Each word in "Hello, I'm Patrick" is an `<a>` tag inside a `<ul class="headingText">` list. Each `<li>` sets a `--clr` CSS custom property via an inline style, and the `data-text` attribute on the `<a>` drives the `::before` pseudo-element that produces the color-fill reveal on hover.
 
 ```html index.html
-<h1
-  class="heading"
-  data-text="Hello,"
-  style="--clr: #ffdd1c"
->
-  Hello,
-</h1>
-<h1
-  class="heading"
-  data-text="I'm"
-  style="--clr: #40BB94"
->
-  I'm
-</h1>
-<h1
-  class="heading"
-  data-text="Patrick"
-  style="--clr: #4567DB"
->
-  Patrick
-</h1>
+<ul class="headingText">
+    <li style="--clr: #ffdd1c;"><a href="#" data-text="&nbsp;Hello,">&nbsp;Hello,</a></li>
+    <li style="--clr: #40BB94;"><a href="#" data-text="&nbsp;I'm">&nbsp;I'm</a></li>
+    <li style="--clr: #4567DB;"><a href="#" data-text="&nbsp;Patrick">&nbsp;Patrick</a></li>
+</ul>
 ```
 
 The `data-text` attribute is read by the `::before` pseudo-element so it can overlay a colored copy of each word and clip-reveal it from left to right on hover.
 
 ```css index.css
-.heading::before {
-  content: attr(data-text);
-  color: var(--clr);
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 0;
-  overflow: hidden;
-  transition: 1s;
-  border-right: 8px solid var(--clr);
-  white-space: nowrap;
+ul.headingText li a {
+    font-family: 'Poppins', sans-serif;
+    font-size: 8rem;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.5);
 }
 
-.heading:hover::before {
-  width: 100%;
+ul.headingText li a::before {
+    content: attr(data-text);
+    position: absolute;
+    color: var(--clr);
+    width: 0;
+    overflow: hidden;
+    transition: 1s;
+    border-right: 8px solid var(--clr);
+    -webkit-text-stroke: 1px var(--clr);
+}
+
+ul.headingText li a:hover::before {
+    width: 100%;
 }
 ```
 
@@ -94,10 +83,12 @@ An SVG wave shape separates the hero from the work experience section. It transi
 The work experience section (`class="busSect"`) uses a two-column grid (`grid-template-columns: 1fr 1fr`). Each card has rounded corners (`border-radius: 30px`), a fixed height of `550px`, and a soft drop shadow.
 
 ```css index.css
-.card {
-  box-shadow: 0px 20px 50px 0px rgba(0, 0, 0, 0.2);
-  border-radius: 30px;
-  height: 550px;
+.internshipCard {
+    width: 90%;
+    max-width: 700px;
+    height: 550px;
+    border-radius: 30px;
+    box-shadow: 0px 20px 50px 0px rgba(0, 0, 0, 0.2);
 }
 ```
 
